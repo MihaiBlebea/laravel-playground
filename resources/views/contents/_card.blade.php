@@ -4,7 +4,7 @@
     </div>
 </div>
 
-@if(app('request')->input('editor') == true)
+@if (request('editor'))
     <vue-content-editor editor="vue-textarea-editor"
                         content-id="{{ $content->id }}"
                         default-content="{{ $content->content }}">

@@ -1,8 +1,17 @@
 <template>
     <div>
+        <label class="btn btn-outline-secondary mb-0" v-if="this.selectedFile == null">
+            Browse <input type="file" name="image" hidden @change="onFileChanged">
+        </label>
+
+        <div v-else class="row justify-content-between">
+            <button class="col btn btn-primary mt-2" v-if="this.selectedFile !== null"
+                  v-on:click="removeImage()">Clear image</button>
+            <button class="col btn btn-primary mt-2" v-if="this.selectedFile !== null"
+                  v-on:click="uploadImage()">Upload</button>
+        </div>
+
         <div class="mt-3" id="image-preview"></div>
-        <p class="mt-2" v-if="this.selectedFile !== null"
-           v-on:click="removeImage($event)">Clear image</p>
     </div>
 
     <!-- <div class="input-group">
@@ -41,21 +50,21 @@ export default {
 
             reader.readAsDataURL(this.selectedFile)
         },
-        removeImage: function(event)
+        removeImage: function()
         {
-            event.preventDefault()
             this.selectedFile = null;
             document.getElementById('image-preview').innerHTML = '';
+        },
+        uploadImage: function()
+        {
+            const formData = new FormData()
+            formData.append('image-upload', this.selectedFile, this.selectedFile.name)
+            axios.post(this.api + 'store/image', formData).then((result)=> {
+                console.log(result.data)
+            }).catch((err)=> {
+                console.log(err)
+            })
         }
     }
-    // watch: {
-    //     content: function()
-    //     {
-    //         this.$emit('content-changed', this.content);
-    //     }
-    // },
-    // created() {
-    //     this.content = this.defaultContent
-    // }
 }
 </script>

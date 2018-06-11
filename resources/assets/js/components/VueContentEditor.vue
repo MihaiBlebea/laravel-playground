@@ -27,7 +27,7 @@ export default {
     computed: {
         editButton: function()
         {
-            return (this.editState == false) ? 'Edit content' : 'Close editor';
+            return (this.editState == false) ? '✎' : '✖';
         }
     },
     methods: {

@@ -48,6 +48,28 @@ class ContentSeeder extends Seeder
             'name'       => 'card',
             'template'   => 'contents._card',
             'content'    => 'foo bar'
+        ],
+
+        [
+            'section_id' => 3,
+            'order'      => 0,
+            'name'       => 'logo',
+            'template'   => 'contents._logo',
+            'content'    => 'x'
+        ],
+        [
+            'section_id' => 3,
+            'order'      => 1,
+            'name'       => 'logo',
+            'template'   => 'contents._logo',
+            'content'    => 'w'
+        ],
+        [
+            'section_id' => 3,
+            'order'      => 2,
+            'name'       => 'logo',
+            'template'   => 'contents._logo',
+            'content'    => 'z'
         ]
     ];
 

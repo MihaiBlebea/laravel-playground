@@ -67503,7 +67503,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         editButton: function editButton() {
-            return this.editState == false ? 'Edit content' : 'Close editor';
+            return this.editState == false ? '✎' : '✖';
         }
     },
     methods: {
@@ -68004,6 +68004,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['default-content'],
@@ -68028,21 +68037,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             reader.readAsDataURL(this.selectedFile);
         },
-        removeImage: function removeImage(event) {
-            event.preventDefault();
+        removeImage: function removeImage() {
             this.selectedFile = null;
             document.getElementById('image-preview').innerHTML = '';
+        },
+        uploadImage: function uploadImage() {
+            var formData = new FormData();
+            formData.append('image-upload', this.selectedFile, this.selectedFile.name);
+            axios.post(this.api + 'store/image', formData).then(function (result) {
+                console.log(result.data);
+            }).catch(function (err) {
+                console.log(err);
+            });
         }
-        // watch: {
-        //     content: function()
-        //     {
-        //         this.$emit('content-changed', this.content);
-        //     }
-        // },
-        // created() {
-        //     this.content = this.defaultContent
-        // }
-    } });
+    }
+});
 
 /***/ }),
 /* 253 */
@@ -68053,22 +68062,47 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "mt-3", attrs: { id: "image-preview" } }),
+    this.selectedFile == null
+      ? _c("label", { staticClass: "btn btn-outline-secondary mb-0" }, [
+          _vm._v("\n        Browse "),
+          _c("input", {
+            attrs: { type: "file", name: "image", hidden: "" },
+            on: { change: _vm.onFileChanged }
+          })
+        ])
+      : _c("div", { staticClass: "row justify-content-between" }, [
+          this.selectedFile !== null
+            ? _c(
+                "button",
+                {
+                  staticClass: "col btn btn-primary mt-2",
+                  on: {
+                    click: function($event) {
+                      _vm.removeImage()
+                    }
+                  }
+                },
+                [_vm._v("Clear image")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          this.selectedFile !== null
+            ? _c(
+                "button",
+                {
+                  staticClass: "col btn btn-primary mt-2",
+                  on: {
+                    click: function($event) {
+                      _vm.uploadImage()
+                    }
+                  }
+                },
+                [_vm._v("Upload")]
+              )
+            : _vm._e()
+        ]),
     _vm._v(" "),
-    this.selectedFile !== null
-      ? _c(
-          "p",
-          {
-            staticClass: "mt-2",
-            on: {
-              click: function($event) {
-                _vm.removeImage($event)
-              }
-            }
-          },
-          [_vm._v("Clear image")]
-        )
-      : _vm._e()
+    _c("div", { staticClass: "mt-3", attrs: { id: "image-preview" } })
   ])
 }
 var staticRenderFns = []

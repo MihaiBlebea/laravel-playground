@@ -18,6 +18,12 @@ class SectionSeeder extends Seeder
             'order' => 1,
             'name' => 'cards',
             'template' => 'sections.cards'
+        ],
+        [
+            'page_id' => 1,
+            'order' => 2,
+            'name' => 'logos',
+            'template' => 'sections.logos'
         ]
     ];
 

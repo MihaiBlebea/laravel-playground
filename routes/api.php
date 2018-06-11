@@ -10,3 +10,10 @@ Route::post('/v1/store/content/{content}', function(Request $request, Content $c
     ]);
     return $content;
 });
+
+Route::post('/v1/store/image', function(Request $request, Content $content) {
+    $content->update([
+        'content' => $request->input('content')
+    ]);
+    return $content;
+});
