@@ -70,6 +70,49 @@ class ContentSeeder extends Seeder
             'name'       => 'logo',
             'template'   => 'contents._logo',
             'content'    => 'z'
+        ],
+
+        [
+            'section_id' => 4,
+            'order'      => 0,
+            'name'       => 'benefit-title',
+            'template'   => 'contents._benefit-title',
+            'content'    => 'This is title 1'
+        ],
+        [
+            'section_id' => 4,
+            'order'      => 0,
+            'name'       => 'benefit-content',
+            'template'   => 'contents._benefit-content',
+            'content'    => 'This is the content 1'
+        ],
+        [
+            'section_id' => 4,
+            'order'      => 1,
+            'name'       => 'benefit-title',
+            'template'   => 'contents._benefit-title',
+            'content'    => 'This is title 2'
+        ],
+        [
+            'section_id' => 4,
+            'order'      => 1,
+            'name'       => 'benefit-content',
+            'template'   => 'contents._benefit-content',
+            'content'    => 'This is the content 2'
+        ],
+        [
+            'section_id' => 4,
+            'order'      => 2,
+            'name'       => 'benefit-title',
+            'template'   => 'contents._benefit-title',
+            'content'    => 'This is title 3'
+        ],
+        [
+            'section_id' => 4,
+            'order'      => 2,
+            'name'       => 'benefit-content',
+            'template'   => 'contents._benefit-content',
+            'content'    => 'This is the content 3'
         ]
     ];
 

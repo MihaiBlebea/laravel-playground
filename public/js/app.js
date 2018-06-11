@@ -67490,21 +67490,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['editor', 'content-id', 'default-content'],
     data: function data() {
         return {
             content: null,
-            editState: false,
-
             components: ['vue-input-editor', 'vue-textarea-editor', 'vue-upload-editor']
         };
-    },
-    computed: {
-        editButton: function editButton() {
-            return this.editState == false ? '✎' : '✖';
-        }
     },
     methods: {
         changeState: function changeState() {
@@ -67548,39 +67555,66 @@ var render = function() {
       "p",
       {
         staticClass: "text-primary pointer",
+        attrs: {
+          "data-toggle": "modal",
+          "data-target": "#modal_" + _vm.contentId
+        },
         on: {
           click: function($event) {
             _vm.changeState()
           }
         }
       },
-      [_vm._v(_vm._s(_vm.editButton))]
+      [_vm._v("✎")]
     ),
     _vm._v(" "),
-    _vm.editState
-      ? _c("div", { staticClass: "mb-3" }, [
-          _vm.components.includes(_vm.editor)
-            ? _c(
-                "div",
-                [
-                  _c(_vm.editor, {
-                    tag: "component",
-                    attrs: { "default-content": _vm.content },
-                    on: {
-                      "content-changed": function($event) {
-                        _vm.onContentChanged($event)
-                      },
-                      "content-updated": function($event) {
-                        _vm.onContentUpdate($event)
-                      }
-                    }
-                  })
-                ],
-                1
-              )
-            : _vm._e()
-        ])
-      : _vm._e()
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          id: "modal_" + _vm.contentId,
+          "data-backdrop": "static"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered ",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body" }, [
+                _vm.components.includes(_vm.editor)
+                  ? _c(
+                      "div",
+                      [
+                        _c(_vm.editor, {
+                          tag: "component",
+                          attrs: { "default-content": _vm.content },
+                          on: {
+                            "content-changed": function($event) {
+                              _vm.onContentChanged($event)
+                            },
+                            "content-updated": function($event) {
+                              _vm.onContentUpdate($event)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -67657,6 +67691,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['default-content'],
@@ -67683,30 +67722,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "input-group" }, [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.content,
-          expression: "content"
-        }
-      ],
-      staticClass: "form-control",
-      attrs: { type: "text" },
-      domProps: { value: _vm.content },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+  return _c("div", [
+    _c("div", { staticClass: "form-group" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.content,
+            expression: "content"
           }
-          _vm.content = $event.target.value
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text" },
+        domProps: { value: _vm.content },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.content = $event.target.value
+          }
         }
-      }
-    }),
+      })
+    ]),
     _vm._v(" "),
-    _c("div", { staticClass: "input-group-append" }, [
+    _c("div", { staticClass: "form-group" }, [
       _c(
         "button",
         {
@@ -67719,6 +67760,15 @@ var render = function() {
           }
         },
         [_vm._v("Update")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
       )
     ])
   ])
@@ -67845,6 +67895,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -67898,12 +67954,14 @@ var render = function() {
             _vm.content = $event.target.value
           }
         }
-      }),
-      _vm._v(" "),
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
       _c(
-        "div",
+        "button",
         {
-          staticClass: "btn btn-outline-secondary btn-block",
+          staticClass: "btn btn-outline-secondary",
           on: {
             click: function($event) {
               _vm.$emit("content-updated", _vm.content)
@@ -67911,6 +67969,15 @@ var render = function() {
           }
         },
         [_vm._v("Update")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
       )
     ])
   ])
@@ -68008,11 +68075,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['default-content'],
@@ -68042,10 +68104,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             document.getElementById('image-preview').innerHTML = '';
         },
         uploadImage: function uploadImage() {
+            var _this = this;
+
             var formData = new FormData();
             formData.append('image-upload', this.selectedFile, this.selectedFile.name);
             axios.post(this.api + 'store/image', formData).then(function (result) {
-                console.log(result.data);
+                _this.$emit('content-updated', result.data);
             }).catch(function (err) {
                 console.log(err);
             });
@@ -68062,47 +68126,58 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    this.selectedFile == null
-      ? _c("label", { staticClass: "btn btn-outline-secondary mb-0" }, [
-          _vm._v("\n        Browse "),
-          _c("input", {
-            attrs: { type: "file", name: "image", hidden: "" },
-            on: { change: _vm.onFileChanged }
-          })
-        ])
-      : _c("div", { staticClass: "row justify-content-between" }, [
-          this.selectedFile !== null
-            ? _c(
-                "button",
-                {
-                  staticClass: "col btn btn-primary mt-2",
-                  on: {
-                    click: function($event) {
-                      _vm.removeImage()
-                    }
-                  }
-                },
-                [_vm._v("Clear image")]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          this.selectedFile !== null
-            ? _c(
-                "button",
-                {
-                  staticClass: "col btn btn-primary mt-2",
-                  on: {
-                    click: function($event) {
-                      _vm.uploadImage()
-                    }
-                  }
-                },
-                [_vm._v("Upload")]
-              )
-            : _vm._e()
-        ]),
+    _c("div", { staticClass: "mb-3", attrs: { id: "image-preview" } }),
     _vm._v(" "),
-    _c("div", { staticClass: "mt-3", attrs: { id: "image-preview" } })
+    _c("div", { staticClass: "form-group" }, [
+      this.selectedFile == null
+        ? _c("label", { staticClass: "btn btn-outline-secondary mb-0" }, [
+            _vm._v("\n            Browse "),
+            _c("input", {
+              attrs: { type: "file", name: "image", hidden: "" },
+              on: { change: _vm.onFileChanged }
+            })
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      this.selectedFile !== null
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  _vm.removeImage()
+                }
+              }
+            },
+            [_vm._v("Clear image")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      this.selectedFile !== null
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  _vm.uploadImage()
+                }
+              }
+            },
+            [_vm._v("Upload")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      )
+    ])
   ])
 }
 var staticRenderFns = []

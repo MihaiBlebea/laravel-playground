@@ -24,7 +24,13 @@ class SectionSeeder extends Seeder
             'order' => 2,
             'name' => 'logos',
             'template' => 'sections.logos'
-        ]
+        ],
+        [
+            'page_id' => 1,
+            'order' => 3,
+            'name' => 'benefits',
+            'template' => 'sections.benefits'
+        ],
     ];
 
     public function run()

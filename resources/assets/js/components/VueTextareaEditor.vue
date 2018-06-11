@@ -4,9 +4,15 @@
             <textarea class="form-control editor"
                       ref="editor"
                       :rows="rows"
-                      v-model="content"></textarea>
-            <div class="btn btn-outline-secondary btn-block"
-                 v-on:click="$emit('content-updated', content)">Update</div>
+                      v-model="content">
+            </textarea>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-outline-secondary"
+                    v-on:click="$emit('content-updated', content)">Update</button>
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
     </div>
 </template>

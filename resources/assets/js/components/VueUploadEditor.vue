@@ -1,27 +1,22 @@
 <template>
     <div>
-        <label class="btn btn-outline-secondary mb-0" v-if="this.selectedFile == null">
-            Browse <input type="file" name="image" hidden @change="onFileChanged">
-        </label>
 
-        <div v-else class="row justify-content-between">
-            <button class="col btn btn-primary mt-2" v-if="this.selectedFile !== null"
+        <div class="mb-3" id="image-preview"></div>
+
+        <div class="form-group">
+            <label class="btn btn-outline-secondary mb-0" v-if="this.selectedFile == null">
+                Browse <input type="file" name="image" hidden @change="onFileChanged">
+            </label>
+
+            <button class="btn btn-primary" v-if="this.selectedFile !== null"
                   v-on:click="removeImage()">Clear image</button>
-            <button class="col btn btn-primary mt-2" v-if="this.selectedFile !== null"
+
+            <button class="btn btn-primary" v-if="this.selectedFile !== null"
                   v-on:click="uploadImage()">Upload</button>
-        </div>
 
-        <div class="mt-3" id="image-preview"></div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
     </div>
-
-    <!-- <div class="input-group">
-        <input type="text" class="form-control" v-model="content">
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary"
-                    type="button"
-                    v-on:click="$emit('content-updated', content)">Update</button>
-        </div>
-    </div> -->
 </template>
 
 <script>
@@ -60,7 +55,7 @@ export default {
             const formData = new FormData()
             formData.append('image-upload', this.selectedFile, this.selectedFile.name)
             axios.post(this.api + 'store/image', formData).then((result)=> {
-                console.log(result.data)
+                this.$emit('content-updated', result.data)
             }).catch((err)=> {
                 console.log(err)
             })
