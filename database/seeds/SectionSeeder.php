@@ -16,18 +16,36 @@ class SectionSeeder extends Seeder
         [
             'page_id' => 1,
             'order' => 1,
+            'name' => 'cards-title',
+            'template' => 'sections.title'
+        ],
+        [
+            'page_id' => 1,
+            'order' => 2,
             'name' => 'cards',
             'template' => 'sections.cards'
         ],
         [
             'page_id' => 1,
-            'order' => 2,
+            'order' => 3,
+            'name' => 'logos-title',
+            'template' => 'sections.title'
+        ],
+        [
+            'page_id' => 1,
+            'order' => 4,
             'name' => 'logos',
             'template' => 'sections.logos'
         ],
         [
             'page_id' => 1,
-            'order' => 3,
+            'order' => 5,
+            'name' => 'benefits-title',
+            'template' => 'sections.title'
+        ],
+        [
+            'page_id' => 1,
+            'order' => 6,
             'name' => 'benefits',
             'template' => 'sections.benefits'
         ],

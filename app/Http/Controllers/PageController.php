@@ -11,7 +11,8 @@ class PageController extends Controller
     public function renderPage(Page $page)
     {
         $contents = collect([]);
-        foreach($page->sections as $section)
+        $ordered_sections = $page->sections->sortBy('order');
+        foreach($ordered_sections as $section)
         {
             $contents[$section->name] = [
                 'section'  => $section,
