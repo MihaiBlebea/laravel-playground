@@ -2,15 +2,11 @@
     <div>
         <p class="text-primary pointer" v-on:click="changeState()">{{ editButton }}</p>
         <div v-if="editState" class="mb-3">
-            <div v-if="editor == 'vue-input-editor'">
-                <vue-input-editor :default-content="content"
-                                  v-on:content-changed="onContentChanged($event)"
-                                  v-on:content-updated="onContentUpdate($event)"></vue-input-editor>
-            </div>
-            <div v-else>
-                <vue-textarea-editor :default-content="content"
-                                     v-on:content-changed="onContentChanged($event)"
-                                     v-on:content-updated="onContentUpdate($event)"></vue-textarea-editor>
+            <div v-if="components.includes(editor)">
+                <component v-bind:is="editor"
+                           :default-content="content"
+                           v-on:content-changed="onContentChanged($event)"
+                           v-on:content-updated="onContentUpdate($event)"></component>
             </div>
         </div>
     </div>
@@ -23,7 +19,9 @@ export default {
     {
         return {
             content: null,
-            editState: false
+            editState: false,
+
+            components: ['vue-input-editor', 'vue-textarea-editor', 'vue-upload-editor']
         }
     },
     computed: {
