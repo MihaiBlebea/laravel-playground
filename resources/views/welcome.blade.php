@@ -14,7 +14,7 @@
 
         <!-- Styles -->
     </head>
-    <body>
+    <body class="bg-white">
         <div class="content mt-5" id="app">
             <div class="row justify-content-center">
                 <div class="col-md-8">
