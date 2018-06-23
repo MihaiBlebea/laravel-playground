@@ -33,7 +33,7 @@ export default {
             if(this.markdownContent !== null)
             {
                 marked.setOptions({
-                    baseUrl: 'http://slabeste',
+                    // baseUrl: 'http://slabeste',
                     gfm	: true,
                     breaks: true,
                 })

@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="form-group">
-            <textarea class="form-control editor"
+            {{ lastSave }}
+            <textarea class="w-100 editor"
                       ref="editor"
                       rows="10"
                       v-model="content"
@@ -20,7 +21,8 @@ export default {
     data: function() {
         return {
             content: null,
-            selected: null
+            selected: null,
+            lastSave: null
         }
     },
     watch: {
@@ -44,6 +46,10 @@ export default {
             }
             this.$refs['editor'].focus();
             this.selected = null
+        },
+        autosave: function()
+        {
+            localStorage.setItem('autosave', JSON.stringify({content: this.content}));
         },
         onSelect: function(event)
         {
@@ -73,6 +79,16 @@ export default {
             }
             this.replaceContent(cursorStart, cursorEnd, stylesheet[payload](content) );
         });
+
+        setInterval(()=> {
+            let saved = localStorage.getItem('autosave')
+            if(JSON.parse(saved).content !== this.content)
+            {
+                this.autosave();
+                let date = new Date();
+                this.lastSave = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+            }
+        }, 4000);
     }
 }
 </script>
@@ -81,5 +97,12 @@ export default {
 .editor {
     resize: none;
     overflow: hidden;
+    border: none;
+    outline: none;
+}
+
+.editor:focus {
+    border: none;
+    outline:none;
 }
 </style>

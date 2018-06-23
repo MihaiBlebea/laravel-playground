@@ -47905,13 +47905,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -48023,95 +48016,85 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card bg-light p-3" }, [
       _c(
-        "nav",
-        { staticClass: "navbar navbar-expand-lg navbar-light bg-light" },
+        "div",
+        { staticClass: "row" },
         [
-          _c(
-            "ul",
-            { staticClass: "navbar-nav mr-auto" },
-            [
-              _c("li", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary pointer mr-3 p-1 pl-3 pr-3",
-                    on: {
-                      click: function($event) {
-                        _vm.changeState()
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.editorText))]
-                )
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.list, function(item) {
-                return _vm.menu.editor
-                  ? [
-                      item.type === "button"
-                        ? _c("li", { staticClass: "nav-item active" }, [
-                            _c(
-                              "button",
+          _c("div", { staticClass: "col mb-md-0 mb-2" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary pointer p-0 pl-3 pr-3 float-left",
+                on: {
+                  click: function($event) {
+                    _vm.changeState()
+                  }
+                }
+              },
+              [_vm._v(_vm._s(_vm.editorText))]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.list, function(item) {
+            return _vm.menu.editor
+              ? _c("div", { staticClass: "col" }, [
+                  item.type === "button"
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "pointer btn btn-outline-secondary p-0 pl-3 pr-3 float-left",
+                          on: {
+                            click: function($event) {
+                              _vm.changeStyle(item.method)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(item.label))]
+                      )
+                    : _c("div", { staticClass: "dropdown" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-outline-secondary dropdown-toggle p-0 pl-3 pr-3 float-left",
+                            attrs: {
+                              "data-toggle": "dropdown",
+                              "aria-haspopup": "true",
+                              "aria-expanded": "false"
+                            }
+                          },
+                          [_vm._v(_vm._s(item.label))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "dropdown-menu",
+                            attrs: { "aria-labelledby": "navbarDropdown" }
+                          },
+                          _vm._l(item.submenu, function(subitem) {
+                            return _c(
+                              "a",
                               {
-                                staticClass:
-                                  "pointer btn btn-outline-secondary mr-2 p-1 pl-3 pr-3",
+                                staticClass: "dropdown-item pointer",
                                 on: {
                                   click: function($event) {
-                                    _vm.changeStyle(item.method)
+                                    _vm.changeStyle(subitem.method)
                                   }
                                 }
                               },
-                              [_vm._v(_vm._s(item.label))]
+                              [_vm._v(_vm._s(subitem.label))]
                             )
-                          ])
-                        : _c("li", { staticClass: "nav-item dropdown" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-outline-secondary dropdown-toggle mr-2 p-1 pl-3 pr-3",
-                                attrs: {
-                                  href: "#",
-                                  role: "button",
-                                  "data-toggle": "dropdown",
-                                  "aria-haspopup": "true",
-                                  "aria-expanded": "false"
-                                }
-                              },
-                              [_vm._v(_vm._s(item.label))]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "dropdown-menu",
-                                attrs: { "aria-labelledby": "navbarDropdown" }
-                              },
-                              _vm._l(item.submenu, function(subitem) {
-                                return _c(
-                                  "a",
-                                  {
-                                    staticClass: "dropdown-item pointer",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.changeStyle(subitem.method)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(subitem.label))]
-                                )
-                              })
-                            )
-                          ])
-                    ]
-                  : _vm._e()
-              })
-            ],
-            2
-          )
-        ]
+                          })
+                        )
+                      ])
+                ])
+              : _vm._e()
+          })
+        ],
+        2
       )
     ])
   ])
@@ -48212,7 +48195,7 @@ exports = module.exports = __webpack_require__(13)(false);
 
 
 // module
-exports.push([module.i, "\n.editor[data-v-348923ce] {\r\n    resize: none;\r\n    overflow: hidden;\n}\r\n", ""]);
+exports.push([module.i, "\n.editor[data-v-348923ce] {\r\n    resize: none;\r\n    overflow: hidden;\r\n    border: none;\r\n    outline: none;\n}\n.editor[data-v-348923ce]:focus {\r\n    border: none;\r\n    outline:none;\n}\r\n", ""]);
 
 // exports
 
@@ -48239,6 +48222,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -48249,7 +48233,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             content: null,
-            selected: null
+            selected: null,
+            lastSave: null
         };
     },
     watch: {
@@ -48270,6 +48255,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             this.$refs['editor'].focus();
             this.selected = null;
+        },
+        autosave: function autosave() {
+            localStorage.setItem('autosave', JSON.stringify({ content: this.content }));
         },
         onSelect: function onSelect(event) {
             this.selected = {
@@ -48298,6 +48286,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             _this.replaceContent(cursorStart, cursorEnd, __WEBPACK_IMPORTED_MODULE_2__markdown_stylesheet_js__["a" /* stylesheet */][payload](content));
         });
+
+        setInterval(function () {
+            var saved = localStorage.getItem('autosave');
+            if (JSON.parse(saved).content !== _this.content) {
+                _this.autosave();
+                var date = new Date();
+                _this.lastSave = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+            }
+        }, 4000);
     }
 });
 
@@ -48660,6 +48657,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "form-group" }, [
+      _vm._v("\n        " + _vm._s(_vm.lastSave) + "\n        "),
       _c("textarea", {
         directives: [
           {
@@ -48670,7 +48668,7 @@ var render = function() {
           }
         ],
         ref: "editor",
-        staticClass: "form-control editor",
+        staticClass: "w-100 editor",
         attrs: { rows: "10" },
         domProps: { value: _vm.content },
         on: {
@@ -48787,7 +48785,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         generateHtml: function generateHtml() {
             if (this.markdownContent !== null) {
                 __WEBPACK_IMPORTED_MODULE_0_marked___default.a.setOptions({
-                    baseUrl: 'http://slabeste',
+                    // baseUrl: 'http://slabeste',
                     gfm: true,
                     breaks: true
                 });
