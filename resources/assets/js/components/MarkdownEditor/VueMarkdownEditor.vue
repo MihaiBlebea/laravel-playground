@@ -1,12 +1,10 @@
 <template>
     <div>
         <div class="form-group">
-            {{ cursorPos }}
             <textarea class="form-control editor"
                       ref="editor"
-                      rows="3"
+                      rows="10"
                       v-model="content"
-                      v-on:click="onTextareaClick($event)"
                       v-on:select="onSelect($event)"></textarea>
         </div>
     </div>
@@ -15,22 +13,20 @@
 <script>
 import autosize from 'autosize'
 import { EventBus } from './../../EventBus.js'
+import { stylesheet } from './../../markdown-stylesheet.js'
 
 export default {
     props: [],
     data: function() {
         return {
             content: null,
-            style: null,
-            selected: null,
-            cursorPos: null
+            selected: null
         }
     },
     watch: {
         content: function()
         {
             autosize(this.$refs['editor'])
-            this.setCursorPosition(this.$refs['editor'].selectionStart)
             this.$emit('content-changed', this.content)
         }
     },
@@ -38,46 +34,16 @@ export default {
         //
     },
     methods: {
-        italic: function()
-        {
-            if(this.selected == null)
-            {
-                this.injectContent(this.cursorPos, this.cursorPos + 2, ' __ ');
-            } else {
-                this.replaceContent(this.selected.startPos, this.selected.endPos, ` _${this.selected.content}_ `);
-            }
-        },
-        bold: function()
-        {
-            if(this.selected == null)
-            {
-                this.injectContent(this.cursorPos, this.cursorPos + 3, ' ____ ');
-            } else {
-                this.replaceContent(this.selected.startPos, this.selected.endPos, ` __${this.selected.content}__ `);
-            }
-        },
-
-        injectContent: function(startPos, cursorPos, inject)
-        {
-            this.content = [ this.content.slice(0, startPos), inject, this.content.slice(startPos) ].join('');
-            this.moveCursor(cursorPos)
-        },
         replaceContent: function(startPos, endPos, content)
         {
-            if(this.selected !== null)
+            if(this.content !== null)
             {
                 this.content = [ this.content.slice(0, startPos), content, this.content.slice(endPos) ].join('');
-                this.$refs['editor'].focus();
-                this.selected = null
+            } else {
+                this.content = content;
             }
-        },
-        moveCursor: function(position)
-        {
-            setTimeout(()=> {
-                this.$refs['editor'].focus();
-                this.$refs['editor'].setSelectionRange(position, position)
-                this.setCursorPosition(position)
-            }, 100)
+            this.$refs['editor'].focus();
+            this.selected = null
         },
         onSelect: function(event)
         {
@@ -87,20 +53,25 @@ export default {
                 content: this.content.slice(this.$refs['editor'].selectionStart, this.$refs['editor'].selectionEnd).trim()
             }
         },
-        onTextareaClick: function(event)
+        getCursorPosition: function()
         {
-            this.setCursorPosition(this.$refs['editor'].selectionStart)
-        },
-        setCursorPosition: function(position)
-        {
-            this.cursorPos = position;
+            return this.$refs['editor'].selectionStart;
         }
     },
     mounted() {
         console.log('VueMarkdownEditor mounted.')
-        EventBus.$on('property-changed', (payload) => {
-            console.log(payload)
-            this[payload]()
+        EventBus.$on('style-changed', (payload) => {
+
+            let cursorStart = this.getCursorPosition();
+            let cursorEnd = this.getCursorPosition();
+            let content = payload;
+            if(this.selected !== null)
+            {
+                cursorStart = this.selected.startPos;
+                cursorEnd = this.selected.endPos;
+                content = this.selected.content
+            }
+            this.replaceContent(cursorStart, cursorEnd, stylesheet[payload](content) );
         });
     }
 }

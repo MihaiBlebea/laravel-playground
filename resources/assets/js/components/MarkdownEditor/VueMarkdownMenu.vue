@@ -1,21 +1,51 @@
 <template>
-    <div class="card">
-        <nav class="nav nav-pills nav-justified bg-light p-2">
-            <a class="nav-link pointer" v-on:click="changeState()">{{ editorText }}</a>
-            <a class="nav-link pointer" v-on:click="changeStyle('bold')">Bold</a>
-            <a class="nav-link pointer" v-on:click="changeStyle('italic')">Italic</a>
-        </nav>
+    <div>
+        <div class="card">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <ul class="navbar-nav mr-auto">
+                    <li>
+                        <button class="btn btn-primary pointer mr-3 p-1 pl-3 pr-3"
+                                v-on:click="changeState()">{{ editorText }}</button>
+                    </li>
+                    <template v-for="item in list" v-if="menu.editor">
+
+                        <li v-if="item.type === 'button'" class="nav-item active">
+                            <button class="pointer btn btn-outline-secondary mr-2 p-1 pl-3 pr-3"
+                               v-on:click="changeStyle(item.method)">{{ item.label }}</button>
+                        </li>
+
+                        <li v-else class="nav-item dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle mr-2 p-1 pl-3 pr-3"
+                                    href="#"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">{{ item.label }}</button>
+                            <div class="dropdown-menu"
+                                 aria-labelledby="navbarDropdown">
+                                <a v-for="subitem in item.submenu"
+                                   class="dropdown-item pointer"
+                                   v-on:click="changeStyle(subitem.method)">{{ subitem.label }}</a>
+                            </div>
+                        </li>
+
+                    </template>
+                </ul>
+            </nav>
+        </div>
     </div>
 </template>
 
 <script>
 import { EventBus } from './../../EventBus.js'
+import { list } from './../../editor-menu.js'
 
 export default {
     props: ['editor-menu'],
     data: function() {
         return {
-            menu: this.editorMenu
+            menu: this.editorMenu,
+            list: list
         }
     },
     computed: {
@@ -32,12 +62,11 @@ export default {
         },
         changeStyle: function(style)
         {
-            EventBus.$emit('property-changed', style);
-            // this.$emit('property-changed', style);
+            EventBus.$emit('style-changed', style);
         }
     },
-    created() {
-
+    mounted() {
+        //
     }
 }
 </script>
