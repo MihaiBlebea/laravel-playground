@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { EventBus } from './../../EventBus.js'
+
 export default {
     props: ['editor-menu'],
     data: function() {
@@ -30,7 +32,8 @@ export default {
         },
         changeStyle: function(style)
         {
-            this.$emit('property-changed', style);
+            EventBus.$emit('property-changed', style);
+            // this.$emit('property-changed', style);
         }
     },
     created() {

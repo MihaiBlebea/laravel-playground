@@ -20,7 +20,6 @@ export default {
             deep: true,
             componentUpdated: function(el, binding)
             {
-                console.log(el)
                 let targets = el.querySelectorAll('code')
                 targets.forEach((target)=> {
                     highlight.highlightBlock(target)
@@ -38,7 +37,6 @@ export default {
                     gfm	: true,
                     breaks: true,
                 })
-
                 return marked(this.markdownContent)
             }
         }
